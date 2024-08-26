@@ -26,6 +26,7 @@ const Search = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
+  height: '50px',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
     width: 'auto',
@@ -48,10 +49,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingTop: theme.spacing(1.7),
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '40ch',
     },
   },
 }));
@@ -98,8 +100,8 @@ export default function HeaderComponent() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Login/Sign Up</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
     </Menu>
   );
 
@@ -157,19 +159,11 @@ export default function HeaderComponent() {
 
   return (
     <Box sx={{ flexGrow: 1}} >
-      <AppBar position="static" sx={{ backgroundColor: '#008B8B' }}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+      <AppBar position="static" sx={{ backgroundColor: '#008B8B' , height: '80px'}}>
+        <Toolbar sx={{ height: '100%' }}>
           <Typography
             variant="h6"
+            fontSize={30}
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
@@ -181,36 +175,40 @@ export default function HeaderComponent() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Search Events....."
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
+            <IconButton size="medium" aria-label="Find Events" color="inherit" sx={{ mr: 10 ,fontSize: 15 }}>
+              <p>Find Events</p>
             </IconButton>
             <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
+              size="medium"
+              aria-label="Create Events"
               color="inherit"
+              sx={{ mr: 10, fontSize: 15 }}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <p>Create Events</p>
             </IconButton>
             <IconButton
               size="large"
               edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              aria-label="Help Center"
               color="inherit"
+              sx={{ mr: 10, fontSize: 15 }}
             >
-              <AccountCircle />
+              <p>Help Center</p>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="Login/Sign Up"
+              color="inherit"
+              sx={{ mr: 10, fontSize: 15 }}
+            >
+              <p>Login/Sign Up</p>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
