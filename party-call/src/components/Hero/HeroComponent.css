@@ -1,0 +1,23 @@
+.hero-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; /* Change to your preferred text color */
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: add background to text for better visibility */
+    padding: 40px;
+    border-radius: 5px;
+    font-size: 25px;
+  }
