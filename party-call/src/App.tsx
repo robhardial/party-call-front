@@ -1,14 +1,14 @@
-import HeaderComponent from "./components/Header/HeaderComponent"
-import Footer from "./components/Footer/FooterComponent"
-import HeroComponent from "./components/Hero/HeroComponent"
 import { Route, Routes } from "react-router-dom"
+import Layout from "./pages/Layout"
+import LandingPage from "./pages/LandingPage/LandingPage"
 
 function App() {
 
   return (
     <div className="app">
       <Routes>
-        <Route>
+        <Route path="/" element={<Layout/>}>
+          <Route index element={<LandingPage/>}/>
         </Route>
       </Routes>
     </div>
