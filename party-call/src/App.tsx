@@ -1,15 +1,17 @@
 import HeaderComponent from "./components/Header/HeaderComponent"
 import Footer from "./components/Footer/FooterComponent"
 import HeroComponent from "./components/Hero/HeroComponent"
+import { Route, Routes } from "react-router-dom"
 
 function App() {
 
   return (
-    <>
-    <HeaderComponent/>
-    <HeroComponent/>
-    <Footer/>
-    </>
+    <div className="app">
+      <Routes>
+        <Route>
+        </Route>
+      </Routes>
+    </div>
   )
 }
 
