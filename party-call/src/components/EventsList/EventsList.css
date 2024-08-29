@@ -1,0 +1,6 @@
+.events-list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1rem; /* Add padding around the container */
+    gap: 3rem;
+}

@@ -1,0 +1,21 @@
+/* MediaCard.css */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px; /* Fixed width */
+    height: 300px; /* Fixed height */
+  }
+  
+  .card-image {
+    height: 140px; /* Fixed height for the image */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+  }
+  
+  .card-content {
+    flex: 1; /* Take up remaining space in the card */
+    overflow: hidden; /* Hide overflow content if needed */
+  }
+  
+  .action-area{
+    height: 100%;
+  }
