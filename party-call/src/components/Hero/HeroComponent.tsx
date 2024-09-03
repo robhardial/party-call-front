@@ -1,10 +1,13 @@
 import React from 'react';
 import PartyImg from "../../assets/party.jpeg"
-import { Button } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { Paper, Button } from '@mui/material';
 import './HeroComponent.css'
 
+
+
 const HeroComponent: React.FC = () => {
+
+    
 
     return(
         <section className="custom-hero">
