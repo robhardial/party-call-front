@@ -4,108 +4,10 @@ import './EventsList.css'
 import party from '../../assets/party.jpeg'
 import { useState, useEffect } from "react";
 import { getEvents } from '../../services/Events.api'
+import { Link } from "react-router-dom";
+import './EventsList.css'
 
 
-/*const events = [
-    {
-      id: 1,
-      title: 'Party at the Beach',
-      startDate: '2024-09-01',
-      startTime: '14:00',
-      image: party,
-      venue: {
-        id: 1,
-        name: 'Beach Venue',
-        location: 'Malibu, CA',
-      }
-    },
-    {
-      id: 2,
-      title: 'Music Festival',
-      startDate: '2024-10-15',
-      startTime: '18:00',
-      image: party,
-      venue: {
-        id: 2,
-        name: 'Festival Grounds',
-        location: 'Austin, TX',
-      }
-    },
-    {
-        id: 1,
-        title: 'Party at the Beach',
-        startDate: '2024-09-01',
-        startTime: '14:00',
-        image: party,
-        venue: {
-          id: 1,
-          name: 'Beach Venue',
-          location: 'Malibu, CA',
-        }
-      },
-      {
-        id: 2,
-        title: 'Music Festival',
-        startDate: '2024-10-15',
-        startTime: '18:00',
-        image: party,
-        venue: {
-          id: 2,
-          name: 'Festival Grounds',
-          location: 'Austin, TX',
-        }
-      },
-      {
-        id: 1,
-        title: 'Party at the Beach',
-        startDate: '2024-09-01',
-        startTime: '14:00',
-        image: party,
-        venue: {
-          id: 1,
-          name: 'Beach Venue',
-          location: 'Malibu, CA',
-        }
-      },
-      {
-        id: 2,
-        title: 'Music Festival',
-        startDate: '2024-10-15',
-        startTime: '18:00',
-        image: party,
-        venue: {
-          id: 2,
-          name: 'Festival Grounds',
-          location: 'Austin, TX',
-        }
-      },
-      {
-        id: 1,
-        title: 'Party at the Beach',
-        startDate: '2024-09-01',
-        startTime: '14:00',
-        image: party,
-        venue: {
-          id: 1,
-          name: 'Beach Venue',
-          location: 'Malibu, CA',
-        }
-      },
-      {
-        id: 2,
-        title: 'Music Festival',
-        startDate: '2024-10-15',
-        startTime: '18:00',
-        image: party,
-        venue: {
-          id: 2,
-          name: 'Festival Grounds',
-          location: 'Austin, TX',
-        }
-      },
-    // Add more events here
-  ];
- */ 
 
   interface Venue {
     id: number;
@@ -149,7 +51,9 @@ const EventsList: React.FC = () => {
     return(
             <div className="events-list">
                 {events.map((event) => (
+                  <Link to={`/events/${event.title}`} state={{ event }} className="link-reset">
                 <MediaCard key={event.id} event={event} />
+                </Link>
             ))}
             </div>
     )
