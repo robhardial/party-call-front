@@ -214,7 +214,9 @@ export default function HeaderComponent() {
               color="inherit"
               sx={{ mr: 10, fontSize: 15 }}
             >
+              <Link to="login" className='link-reset'>
               <p>Login/Sign Up</p>
+              </Link>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
