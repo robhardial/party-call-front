@@ -8,7 +8,7 @@ import './Layout.css'
 const Layout: React.FC = () =>{
     return (
         <div className="layout-container">
-            <HeaderComponent />
+            <HeaderComponent className="header"/>
             <main className="main-content">
                 <Outlet />
             </main>

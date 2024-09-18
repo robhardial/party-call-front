@@ -60,7 +60,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function HeaderComponent() {
+interface HeaderComponentProps {
+  className?: string;
+}
+
+const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -239,3 +243,4 @@ export default function HeaderComponent() {
   );
 }
 
+export default HeaderComponent;

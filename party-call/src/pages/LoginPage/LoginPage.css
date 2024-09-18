@@ -1,0 +1,14 @@
+.background-img{
+    background-image: url("../../assets/login.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    width: 100%;
+    display: 'flex';
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box{
+    padding-top: 90px;
+}
