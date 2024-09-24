@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
+import PersonIcon from '@mui/icons-material/Person';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -163,6 +164,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
     </Menu>
   );
 
+  const token = localStorage.getItem('jwtToken');
+
   return (
     <Box sx={{ flexGrow: 1}} >
       <AppBar position="static" sx={{ backgroundColor: '#008B8B' , height: '80px'}}>
@@ -211,7 +214,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
             >
               <p>Help Center</p>
             </IconButton>
-            <IconButton
+            {!token && <IconButton
               size="large"
               edge="end"
               aria-label="Login/Sign Up"
@@ -222,6 +225,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
               <p>Login/Sign Up</p>
               </Link>
             </IconButton>
+            }
+
+            {token && <IconButton color='inherit'><PersonIcon fontSize='inherit'>
+              <Link to="login" className='link-reset'>
+              </Link>
+            </PersonIcon>
+            <p style={{fontSize:'14px'}}>My Account</p>
+            </IconButton>
+            }
+
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
