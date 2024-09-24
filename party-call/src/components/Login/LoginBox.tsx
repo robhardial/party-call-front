@@ -6,7 +6,7 @@ import email_icon from '../../assets/envelope.png'
 import Alert from '@mui/material/Alert';
 import './LoginBox.css'
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -18,6 +18,7 @@ const LoginBox: React.FC = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async () => {
         setMessage(""); 
@@ -56,6 +57,7 @@ const LoginBox: React.FC = () => {
                 if (response.status === 200) {
                     setMessage("Login successful!");
                     localStorage.setItem('jwtToken', response.data.token);
+                    window.location.href = '/';
                 } else {
                     setMessage("Login failed. Please try again.");
                 }

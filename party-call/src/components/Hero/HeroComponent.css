@@ -21,3 +21,8 @@
     border-radius: 5px;
     font-size: 25px;
   }
+
+  .link-reset{
+    text-decoration: none;
+    color: inherit;
+}
