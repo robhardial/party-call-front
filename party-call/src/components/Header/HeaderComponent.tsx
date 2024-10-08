@@ -17,6 +17,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
+import MenuList from '../MenuList/MenuList';
 import './HeaderComponent.css'
 
 const Search = styled('div')(({ theme }) => ({
@@ -191,7 +192,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex'} }}>
             <IconButton size="medium" aria-label="Find Events" color="inherit" sx={{ mr: 10 ,fontSize: 15 }}>
               <Link to="find-events" className='link-reset'> 
               <p>Find Events</p>
@@ -227,12 +228,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
             </IconButton>
             }
 
-            {token && <IconButton color='inherit'><PersonIcon fontSize='inherit'>
-              <Link to="login" className='link-reset'>
-              </Link>
-            </PersonIcon>
-            <p style={{fontSize:'14px'}}>My Account</p>
-            </IconButton>
+            {token && <MenuList>
+            </MenuList>
             }
 
           </Box>
