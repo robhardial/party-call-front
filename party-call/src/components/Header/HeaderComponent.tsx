@@ -179,7 +179,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             <Link to="/" className='link-reset'>
-            Party Call
+            Party-Call
             </Link>
           </Typography>
           <Search>
@@ -192,7 +192,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) =>  {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex'} }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex'} }} className="drop-down">
             <IconButton size="medium" aria-label="Find Events" color="inherit" sx={{ mr: 10 ,fontSize: 15 }}>
               <Link to="find-events" className='link-reset'> 
               <p>Find Events</p>

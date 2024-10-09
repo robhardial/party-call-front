@@ -8,6 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import { IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
+import './MenuList.css'
 
 export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
@@ -96,7 +98,9 @@ export default function MenuListComposition() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose} sx={{fontSize:'12px'}}>Profile</MenuItem>
+                    <Link to={"account-settings"} className='link-reset'>
+                      <MenuItem onClick={handleClose} sx={{fontSize:'12px'}}>Account Settings</MenuItem>
+                    </Link>
                     <MenuItem onClick={handleClose} sx={{fontSize:'12px'}}>My Tickets</MenuItem>
                     <MenuItem onClick={() => { handleClose; logout(); }} sx={{ fontSize: '12px' }}>Logout</MenuItem>
                   </MenuList>
