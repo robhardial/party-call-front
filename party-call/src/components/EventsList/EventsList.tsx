@@ -39,7 +39,7 @@ const EventsList: React.FC = () => {
               title: event.title,
               startDate: event.startDate,
               startTime: event.startTime,
-              image: party, // Replace with actual image source
+              image: event.imageUrl, // Replace with actual image source
               venue: event.venue,
               description: event.description,
             }));
