@@ -1,0 +1,9 @@
+.footer-box {
+    width: 100%;
+    background-color: #62C5C5;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 0; /* Ensure no margin above */
+    margin: 0;
+  }
+

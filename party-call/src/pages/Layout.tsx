@@ -12,7 +12,7 @@ const Layout: React.FC = () =>{
             <main className="main-content">
                 <Outlet />
             </main>
-            <Footer/>
+            <Footer />
         </div>
     )
 }
