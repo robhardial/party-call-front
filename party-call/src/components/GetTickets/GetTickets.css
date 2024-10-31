@@ -1,0 +1,16 @@
+.ticket-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.ticket-btn{
+    width: 100%;
+    background-color: #015482;
+    color: white;
+    border-radius: 5px;
+    height: 50px;
+    font-size: 15px;
+}

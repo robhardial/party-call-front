@@ -1,17 +1,10 @@
 import React, { FC, ReactElement } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
+import "./FooterComponent.css";
 
 export const Footer: FC = (): ReactElement => {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "auto",
-        backgroundColor: "#62C5C5",
-        paddingTop: "1rem",
-        paddingBottom: "1rem",
-      }}
-    >
+    <Box className="footer-box">
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center">
           <Grid item xs={12}>

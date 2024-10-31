@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { getEvents } from '../../services/Events.api'
 import { Link } from "react-router-dom";
 import './EventsList.css'
+import Decimal from 'decimal.js';
 
 
 
@@ -19,8 +20,16 @@ import './EventsList.css'
     id: number;
     title: string;
     venue: Venue;
+    price: Decimal,
     startDate: string;
     startTime: string;
+    endDate: string;
+    endTime: string;
+    creator: {
+      userId: number,
+      firstName: string,
+      lastName: string
+    }
     image: string; // Assuming an image field is necessary
     description: string;
   }
@@ -37,10 +46,14 @@ const EventsList: React.FC = () => {
             const cleanedEvents: Event[] = data.map((event: any) => ({
               id: event.eventId,
               title: event.title,
+              price: event.price,
               startDate: event.startDate,
               startTime: event.startTime,
+              endDate: event.endDate,
+              endTime: event.endTime,
               image: event.imageUrl, // Replace with actual image source
               venue: event.venue,
+              creator: event.creator,
               description: event.description,
             }));
             setEvents(cleanedEvents);
@@ -48,14 +61,19 @@ const EventsList: React.FC = () => {
         })();
       }, []);
 
+      const handleOpenEvent = (event: Event) => {
+        const eventDetailsUrl = `/events/${event.title}`;
+        window.open(eventDetailsUrl, '_blank');
+      };
+
     return(
-            <div className="events-list">
-                {events.map((event) => (
-                  <Link to={`/events/${event.title}`} state={{ event }} className="link-reset">
-                <MediaCard key={event.id} event={event} />
-                </Link>
+        <div className="event-list">
+            {events.map((event) => (
+              <div key={event.id} onClick={() => handleOpenEvent(event)}>
+                <MediaCard event={event} />
+              </div>
             ))}
-            </div>
+        </div>
     )
 }
 

@@ -1,7 +1,12 @@
-import React from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Link, unstable_DataStrategyFunctionArgs, useLocation, useParams } from "react-router-dom";
+import { Box, Paper, Typography } from "@mui/material";
 import './EventDetails.css'
+import { AccountCircle, CalendarMonth, LocationOn } from "@mui/icons-material";
+import GetTickets from "../GetTickets/GetTickets";
+import MoreEvents from "../MoreEvents/MoreEvents";
+import { getEventsByUserId, getEventByTitle } from "../../services/Events.api";
+import Decimal from "decimal.js";
 
 interface Venue {
     id: number;
@@ -9,22 +14,94 @@ interface Venue {
     location: string;
   }
   
-  interface Event {
+interface Event {
     id: number;
     title: string;
-    venue: Venue;
+    venue: {
+      name : String
+      address : String,
+      state : String,
+      zipCode : String
+    };
     startDate: string;
+    price: Decimal
     startTime: string;
+    endDate: string;
+    endTime: string;
     image: string; // Assuming an image field is necessary
     description: string;
-  }
+    creator: {
+      userId: number,
+      firstName: string,
+      lastName: string
+    }
+}
 
 
 const EventDetails: React.FC = () => {
 
-    const { eventName } = useParams<{ eventName: string }>(); // Capture the URL parameter
-    const location = useLocation();
-    const event = location.state?.event as Event | undefined;
+
+    const { eventName = " " } = useParams();
+    const [event, setEvent] = useState<Event>();
+
+    const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+    const startTimeString = event && event.startTime ? `${currentDate}T${event.startTime}` : 0; // Combine the date with the time
+    const endTimeString = event && event.endTime ? `${currentDate}T${event.endTime}` : 0; // Combine the date with the time
+
+    const [events, setEvents] = useState<Event[]>([]);
+
+    useEffect(() => {
+      (async () => {
+        const data = await getEventsByUserId(1);
+        if (data) {
+          const cleanedEvents: Event[] = data.map((event: any) => ({
+            id: event.eventId,
+            price: event.price,
+            title: event.title,
+            startDate: event.startDate,
+            startTime: event.startTime,
+            endDate: event.endDate,
+            endTime: event.endTime,
+            image: event.imageUrl, // Replace with actual image source
+            venue: event.venue,
+            creator: event.creator,
+            description: event.description,
+          }));
+          setEvents(cleanedEvents);
+        }
+      })();
+    }, []);
+
+    useEffect(() => {
+      (async () => {
+        console.log(eventName)
+        const data = await getEventByTitle(eventName);
+        if (data) {
+          const cleanedEvent: Event = {
+            id: data.eventId,
+            price: data.price,
+            title: data.title,
+            startDate: data.startDate,
+            startTime: data.startTime,
+            endDate: data.endDate,
+            endTime: data.endTime,
+            image: data.imageUrl, 
+            venue: data.venue,
+            creator: data.creator,
+            description: data.description,
+          };
+          setEvent(cleanedEvent);
+          console.log(cleanedEvent);
+        }
+      })();
+    }, [eventName]);
+
+    const handleOpenEvent = (event: Event) => {
+      const eventDetailsUrl = `/events/${event.title}`;
+      window.open(eventDetailsUrl, '_blank');
+    };
+    
+
 
     if (!event) {
         return (
@@ -35,42 +112,110 @@ const EventDetails: React.FC = () => {
         );
       }
     return(
-        <div>
-        <Box
-      sx={{
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '300px',
-        backgroundImage: `url(${event.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        maxWidth: '80%',
-        color: 'white',
-        textAlign: 'center',
-        padding: '0px',
-        mb: 2, // Margin-bottom for spacing below the banner
-        borderRadius: '16px', // Set border radius for curved corners
-      }}
-    >
+        <div className="full-page"> 
+        <Box className="event-box" sx={{backgroundImage: `url(${event.image})`}}>
         </Box>
         
         <Box sx={{display: "flex",
             flexDirection: 'column',
-            paddingLeft: '30px',
+            paddingLeft: '100px',
             alignItems: 'left',
             "& > *": {
             margin: 0, // Reset margin for all child elements
-            padding: 0, // Optional: Reset padding if needed
+            padding: 0, // Optional: Reset padding if neede
           },
         }}>
             <div>
-                <h3>{event.startDate}</h3>
-                <h1 style={{fontSize:'80px', margin:'0'}}>{event.title}</h1>
+                <h3 className="event-date">{new Date(event.startDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}</h3>
+                <h1 className="page-title">{event.title}</h1>
             </div>
-            <p>Time: {event.startTime}</p>
-            <p>Venue: {event.venue.name}</p>
-            <p>Description: {event.description}</p>
+            <br></br>
+            <h2>Date and time</h2>
+            <Box className="date-box" display={"flex"} alignItems={"center"}>
+              <CalendarMonth sx={{fontSize:'19px'}}/>
+                <p>{new Date(event.startDate).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                  })} | {new Date(startTimeString).toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,  // This will display time in 24-hour format
+                  })} - {new Date(endTimeString).toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,  // This will display time in 24-hour format
+                  })} EST</p>
+            </Box>
+            <br></br>
+            <br></br>
+            <br></br>
+            <h2>Location</h2>
+            <br></br>
+            <Box className="location-box" display={"flex"} alignItems={"center"}>
+            <LocationOn sx={{fontSize:'19px'}}/>
+            <p>{event.venue.name}</p>
+            </Box>
+            <p  style={{ marginLeft: '20px' }}>{event.venue.address}, {event.venue.state}, {event.venue.zipCode}</p>
+            <br></br>
+            <br></br>
+            <br></br>
+            <h2>About this event</h2>
+            <br></br>
+            <p>{event.description}</p>
+            <br></br>
+            <br></br>
+            <br></br>
+            <h2>Organized by</h2>
+            <br></br>
+            <Box
+            className="creator-details"
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                '& > :not(style)': {
+                  m: 1, // Optional: Add padding to the content
+                  paddingRight: 25,
+                  paddingTop: 3,
+                  paddingBottom: 3
+                },
+              }}
+            >
+              <Paper elevation={3}>
+                <Box className="creator-box">
+                  <AccountCircle sx={{fontSize:"80px", color:"#015482"}}></AccountCircle>
+                  <Typography fontSize="30px">    {event.creator.firstName} {event.creator.lastName}</Typography>
+                </Box>
+              </Paper>
+            </Box>
+
+            <br></br>
+            <br></br>
+            <br></br>
+
+            <h2>More events from this organizer</h2>
+            <br></br>
+            <div className="events-list">
+                {events.map((event) => (
+                  <div key={event.id} onClick={() => handleOpenEvent(event)} className="link-reset">
+                    <MoreEvents key={event.id} event={event} />
+                  </div>
+            ))}
+            </div>
+
+
+            <Box sx={{
+              position: 'fixed',
+              bottom: 200, // Distance from the bottom of the viewport
+              right: 50,  // Distance from the right of the viewport
+              zIndex: 1000 // Ensure it appears above other content
+            }}>
+              <GetTickets event={event}/>
+            </Box>
         </Box>
         </div>
     )

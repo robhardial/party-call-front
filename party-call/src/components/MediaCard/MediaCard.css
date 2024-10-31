@@ -19,3 +19,8 @@
   .action-area{
     height: 100%;
   }
+
+  .creator-info{
+    display: flex;
+    align-items: center;
+  }
