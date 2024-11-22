@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": " prettier --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -17,6 +18,8 @@
     "axios": "^1.7.7",
     "bigdecimal": "^0.6.1",
     "decimal.js": "^10.4.3",
+    "jwt-decode": "^4.0.0",
+    "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-material-ui-carousel": "^3.4.2",

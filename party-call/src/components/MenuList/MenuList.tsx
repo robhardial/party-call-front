@@ -1,15 +1,15 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
-import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
-import Stack from '@mui/material/Stack';
-import { IconButton } from '@mui/material';
-import { Link } from 'react-router-dom';
-import './MenuList.css'
+import * as React from "react";
+import Button from "@mui/material/Button";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Grow from "@mui/material/Grow";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Stack from "@mui/material/Stack";
+import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
+import "./MenuList.css";
 
 export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
@@ -31,18 +31,18 @@ export default function MenuListComposition() {
   };
 
   function handleListKeyDown(event: React.KeyboardEvent) {
-    if (event.key === 'Tab') {
+    if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
-    } else if (event.key === 'Escape') {
+    } else if (event.key === "Escape") {
       setOpen(false);
     }
   }
 
   const logout = async () => {
-        localStorage.removeItem('jwtToken');
-        window.location.href = '/';
-  }
+    localStorage.removeItem("jwtToken");
+    window.location.href = "/";
+  };
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
@@ -60,17 +60,17 @@ export default function MenuListComposition() {
         <IconButton
           ref={anchorRef}
           id="composition-button"
-          aria-controls={open ? 'composition-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
+          aria-controls={open ? "composition-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
-          color='inherit'
-          size='medium'
+          color="inherit"
+          size="medium"
           onClick={handleToggle}
-           sx={{
-            marginTop: '20px',
-            fontSize: '15px',
-            position: 'relative'
-            }}
+          sx={{
+            marginTop: "20px",
+            fontSize: "15px",
+            position: "relative",
+          }}
         >
           Dashboard
         </IconButton>
@@ -87,7 +87,7 @@ export default function MenuListComposition() {
               {...TransitionProps}
               style={{
                 transformOrigin:
-                  placement === 'bottom-start' ? 'left top' : 'left bottom',
+                  placement === "bottom-start" ? "left top" : "left bottom",
               }}
             >
               <Paper>
@@ -98,11 +98,23 @@ export default function MenuListComposition() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <Link to={"account-settings"} className='link-reset'>
-                      <MenuItem onClick={handleClose} sx={{fontSize:'12px'}}>Account Settings</MenuItem>
+                    <Link to={"account-settings"} className="link-reset">
+                      <MenuItem onClick={handleClose} sx={{ fontSize: "12px" }}>
+                        Account Settings
+                      </MenuItem>
                     </Link>
-                    <MenuItem onClick={handleClose} sx={{fontSize:'12px'}}>My Tickets</MenuItem>
-                    <MenuItem onClick={() => { handleClose; logout(); }} sx={{ fontSize: '12px' }}>Logout</MenuItem>
+                    <MenuItem onClick={handleClose} sx={{ fontSize: "12px" }}>
+                      My Tickets
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose;
+                        logout();
+                      }}
+                      sx={{ fontSize: "12px" }}
+                    >
+                      Logout
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
