@@ -26,7 +26,7 @@ interface Event {
 
 interface EventDto{
   event : Event;
-  fileDto: {
+  fileDTO: {
     fileName : string;
     base64 : string;
   }

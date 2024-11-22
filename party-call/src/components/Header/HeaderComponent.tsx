@@ -19,6 +19,10 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
 import MenuList from "../MenuList/MenuList";
 import "./HeaderComponent.css";
+import {isTokenExpired} from '../../services/Jwt';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -165,7 +169,37 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) => {
     </Menu>
   );
 
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+const logout = async () => {
+    const navigate = useNavigate();
+    localStorage.removeItem("jwtToken");
+    navigate("/login")
+    setIsLoggedIn(false);
+}
+
+useEffect(() => {
   const token = localStorage.getItem("jwtToken");
+
+  if (token && !isTokenExpired(token)) {
+    setIsLoggedIn(true);
+  } else {
+    logout(); // Ensure user is logged out if token is missing/expired
+  }
+}, []); // Runs only on mount
+
+
+
+const isTokenExpired = (token: string): boolean => {
+  try {
+    const decoded: { exp: number } = jwtDecode(token);
+    const now = Math.floor(Date.now() / 1000);
+    return decoded.exp <= now; // Token is expired if exp is less than or equal to current time
+  } catch {
+    return true; // Treat invalid token as expired
+  }
+};
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -181,7 +215,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) => {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            <Link to="/" className="link-reset">
+            <Link to="/"  className="link-reset">
               Party-Call
             </Link>
           </Typography>
@@ -228,7 +262,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) => {
             >
               <p>Help Center</p>
             </IconButton>
-            {!token && (
+            {!isLoggedIn && (
               <IconButton
                 size="large"
                 edge="end"
@@ -242,7 +276,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ className }) => {
               </IconButton>
             )}
 
-            {token && <MenuList></MenuList>}
+            {isLoggedIn &&  <MenuList></MenuList>}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

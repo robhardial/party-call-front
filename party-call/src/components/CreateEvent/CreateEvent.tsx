@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./CreateEvent.css";
-import { Autocomplete, Box, Button, Chip, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, Chip, FormControl, FormHelperText, Grid, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
 import sidebanner from "../../assets/sidebanner.png";
 import { Padding, Person } from "@mui/icons-material";
 import { grey } from "@mui/material/colors";
@@ -108,6 +108,22 @@ const CreateEvent: React.FC = () => {
   });
   const [ticketQuantity, setTicketQuantity] = useState(0);
   const [ticketAmount, setTicketAmount] = useState(0.0);
+  
+  const [imageError, setImageError] = useState('');
+  const [errors, setErrors] = useState({
+    eventName: '',
+    eventSummary: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    venueName: '',
+    venueAddress: '',
+    venueCity: '',
+    venueState: '',
+    venueZipcode: '',
+    ticketQuantity: ''
+  });
+  
 
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,8 +131,9 @@ const CreateEvent: React.FC = () => {
     if (file && file.type.startsWith("image/")) {
       setImage(file);
       setPreview(URL.createObjectURL(file));
+      setImageError('');
     } else {
-      alert("Please select an image file");
+      setImageError('Please select a valid image file.');
     }
   };
 
@@ -128,6 +145,33 @@ const CreateEvent: React.FC = () => {
   };
 
   const handleEvent = async () => {
+
+    const newErrors = {
+      eventName: eventName ? '' : 'Event title is required.',
+      eventSummary: eventSummary ? '' : 'Summary is required.',
+      date: date ? '' : 'Date is required.',
+      startTime: startTime ? '' : 'Start time is required.',
+      endTime: endTime ? '' : 'End time is required.',
+      venueName: venue.name ? '' : 'Venue name is required.',
+      venueAddress: venue.address1 ? '' : 'Address is required.',
+      venueCity: venue.city ? '' : 'City is required.',
+      venueState: venue.state ? '' : 'State is required.',
+      venueZipcode: venue.zipcode ? '' : 'Zip code is required.',
+      ticketQuantity: ticketQuantity > 0 ? '' : 'Ticket quantity must be greater than 0.',
+      image: image ? '' : 'Image is required.'
+    };
+
+    setErrors(newErrors);
+
+    if (!image) {
+      setImageError('Image is required.');
+      return;
+    }
+
+    // If there are any errors, do not submit
+    const hasErrors = Object.values(newErrors).some((error) => error !== '');
+    if (hasErrors) return;
+
     try {
       const priceDec = new Decimal(ticketAmount);
       const startDateStr = date ? date.toISOString().split('T')[0] : '';
@@ -230,6 +274,8 @@ const CreateEvent: React.FC = () => {
               fullWidth
               value={eventName} 
               onChange={(e) => setEventName(e.target.value)}
+              error={!!errors.eventName}
+              helperText={errors.eventName}
               InputProps={{
                 sx: {
                   height: 48,
@@ -254,6 +300,8 @@ const CreateEvent: React.FC = () => {
               multiline
               value={eventSummary} 
               onChange={(e) => setEventSummary(e.target.value)}
+              error={!!errors.eventSummary}
+              helperText={errors.eventSummary}
               InputProps={{
                 sx: {
                   paddingBottom:10,
@@ -276,7 +324,7 @@ const CreateEvent: React.FC = () => {
             </Typography>
           </Grid>
             <Grid container direction="row">
-              <Grid item xs  paddingBottom={3} marginLeft={1}>
+              <Grid item xs  paddingBottom={3} marginLeft={1} paddingRight={1}>
                 <TextField
                   required
                   type="date"
@@ -284,6 +332,8 @@ const CreateEvent: React.FC = () => {
                   fullWidth
                   value={date ? date.toISOString().split('T')[0] : ''} // Formats date for the input
                   onChange={(e) => setDate(new Date(e.target.value))} // Sets date as a Date object
+                  error={!!errors.date}
+                  helperText={errors.date}
                 />
               </Grid>
               <Grid item xs paddingBottom={3} paddingRight={1}>
@@ -298,6 +348,8 @@ const CreateEvent: React.FC = () => {
                   fullWidth
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)} 
+                  error={!!errors.startTime}
+                  helperText={errors.startTime}
                 />
               </Grid>
               <Grid item xs paddingBottom={3}>
@@ -312,6 +364,8 @@ const CreateEvent: React.FC = () => {
                   fullWidth
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
+                  error={!!errors.endTime}
+                  helperText={errors.endTime}
                 />
               </Grid>
             </Grid>
@@ -329,6 +383,8 @@ const CreateEvent: React.FC = () => {
               fullWidth
               value={venue.name}
               onChange={(e) => handleVenueChange('name', e.target.value)}
+              error={!!errors.venueName}
+              helperText={errors.venueName}
               InputProps={{
                 sx: {
                   height: 48,
@@ -345,6 +401,8 @@ const CreateEvent: React.FC = () => {
                 fullWidth
                 value={venue.address1}
                 onChange={(e) => handleVenueChange('address1', e.target.value)}
+                error={!!errors.venueAddress}
+                helperText={errors.venueAddress}
                 InputProps={{
                   sx: {
                     height: 48,
@@ -360,6 +418,8 @@ const CreateEvent: React.FC = () => {
                 fullWidth
                 value={venue.city}
                 onChange={(e) => handleVenueChange('city', e.target.value)}
+                error={!!errors.venueCity}
+                helperText={errors.venueCity}
                 InputProps={{
                   sx: {
                     height: 48,
@@ -370,7 +430,7 @@ const CreateEvent: React.FC = () => {
         </Grid>
         <Grid container direction="row">
             <Grid item xs paddingBottom={3} paddingRight={2}>
-              <FormControl fullWidth required>
+              <FormControl fullWidth required error={!!errors.venueState}>
                 <InputLabel>State</InputLabel>
                 <Select
                   id="state-select"
@@ -386,6 +446,7 @@ const CreateEvent: React.FC = () => {
                     </MenuItem>
                   ))}
                 </Select>
+                <FormHelperText>{errors.venueState}</FormHelperText>
               </FormControl>
             </Grid>
             <Grid item xs paddingBottom={3} paddingRight={2} marginRight={'20%'}>
@@ -397,6 +458,8 @@ const CreateEvent: React.FC = () => {
                 fullWidth
                 value={venue.zipcode}
                 onChange={(e) => handleVenueChange('zipcode', e.target.value)}
+                error={!!errors.venueZipcode}
+                helperText={errors.venueZipcode}
                 InputProps={{
                   sx: {
                     height: 48,
@@ -423,6 +486,8 @@ const CreateEvent: React.FC = () => {
                 fullWidth
                 value={ticketQuantity}
                 onChange={(e) => setTicketQuantity(Number(e.target.value))}
+                error={!!errors.ticketQuantity}
+                helperText={errors.ticketQuantity}
                 InputProps={{
                   sx: {
                     height: 48,
@@ -466,6 +531,12 @@ const CreateEvent: React.FC = () => {
               <Box mt={2}>
                 <img src={preview} alt="Selected" style={{ maxWidth: "100%", maxHeight: "300px" }} />
               </Box>
+            )}
+
+            {imageError && (
+                      <Typography color="error" variant="body2">
+                        {imageError}
+                      </Typography>
             )}
             {image && (
               <Typography variant="body2" style={{ marginTop: 10 }}>

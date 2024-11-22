@@ -178,7 +178,7 @@ const EventDetails: React.FC = () => {
           <LocationOn sx={{ fontSize: "19px" }} />
           <p>{event.venue.name}</p>
         </Box>
-        <p style={{ marginLeft: "20px" }}>
+        <p style={{ marginLeft: "20px", letterSpacing: '.5px', color: 'grey' }}>
           {event.venue.address}, {event.venue.state}, {event.venue.zipCode}
         </p>
         <br></br>
@@ -186,7 +186,9 @@ const EventDetails: React.FC = () => {
         <br></br>
         <h2>About this event</h2>
         <br></br>
-        <p>{event.description}</p>
+        <div style={{ whiteSpace: "pre-wrap", color: 'grey' }}>
+          {event.description} {/* Rendered with preserved new lines */}
+        </div>
         <br></br>
         <br></br>
         <br></br>
@@ -205,7 +207,7 @@ const EventDetails: React.FC = () => {
             },
           }}
         >
-          <Paper elevation={3}>
+          <Paper elevation={3} sx={{background:'#D3D3D3'}}>
             <Box className="creator-box">
               <AccountCircle
                 sx={{ fontSize: "80px", color: "#015482" }}

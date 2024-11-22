@@ -17,7 +17,7 @@ interface Event {
   startTime: string;
   endDate: string;
   endTime: string;
-  image: string; // Assuming an image field is necessary
+  image: string; 
   description: string;
   creator: {
     firstName: string;
