@@ -7,6 +7,7 @@ import { getEvents } from "../../services/Events.api";
 import { Link } from "react-router-dom";
 import "./EventsList.css";
 import Decimal from "decimal.js";
+import Loader from "../Loader/Loader";
 
 interface Venue {
   id: number;
@@ -34,25 +35,33 @@ interface Event {
 
 const EventsList: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const data = await getEvents();
-      if (data) {
-        const cleanedEvents: Event[] = data.map((event: any) => ({
-          id: event.eventId,
-          title: event.title,
-          price: event.price,
-          startDate: event.startDate,
-          startTime: event.startTime,
-          endDate: event.endDate,
-          endTime: event.endTime,
-          image: event.imageUrl, 
-          venue: event.venue,
-          creator: event.creator,
-          description: event.description,
-        }));
-        setEvents(cleanedEvents);
+      setIsLoading(true); // Start the loader
+      try {
+        const data = await getEvents();
+        if (data) {
+          const cleanedEvents: Event[] = data.map((event: any) => ({
+            id: event.eventId,
+            title: event.title,
+            price: event.price,
+            startDate: event.startDate,
+            startTime: event.startTime,
+            endDate: event.endDate,
+            endTime: event.endTime,
+            image: event.imageUrl, 
+            venue: event.venue,
+            creator: event.creator,
+            description: event.description,
+          }));
+          setEvents(cleanedEvents);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setIsLoading(false); // Stop the loader
       }
     })();
   }, []);
@@ -63,12 +72,18 @@ const EventsList: React.FC = () => {
   };
 
   return (
-    <div className="event-list">
-      {events.map((event) => (
-        <div key={event.id} onClick={() => handleOpenEvent(event)}>
-          <MediaCard event={event} />
+    <div>
+      {isLoading ? (
+        <Loader /> // Display the loader while loading
+      ) : (
+        <div className="event-list">
+          {events.map((event) => (
+            <div key={event.id} onClick={() => handleOpenEvent(event)}>
+              <MediaCard event={event} />
+            </div>
+        ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };

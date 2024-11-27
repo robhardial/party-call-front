@@ -6,6 +6,7 @@ import { Padding, Person } from "@mui/icons-material";
 import { grey } from "@mui/material/colors";
 import Decimal from "decimal.js";
 import { createEvent } from "../../services/Events.api";
+import Loader from "../Loader/Loader";
 
 interface File {
   name: string;
@@ -92,6 +93,9 @@ interface EventDto{
 }
 
 const CreateEvent: React.FC = () => {
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccessful, setIsSuccessful] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [eventName, setEventName] = useState('');
@@ -123,6 +127,7 @@ const CreateEvent: React.FC = () => {
     venueZipcode: '',
     ticketQuantity: ''
   });
+
   
 
 
@@ -172,6 +177,8 @@ const CreateEvent: React.FC = () => {
     const hasErrors = Object.values(newErrors).some((error) => error !== '');
     if (hasErrors) return;
 
+    setIsLoading(true);
+
     try {
       const priceDec = new Decimal(ticketAmount);
       const startDateStr = date ? date.toISOString().split('T')[0] : '';
@@ -180,7 +187,6 @@ const CreateEvent: React.FC = () => {
   
       // Handle image file reading asynchronously
       if (image) {
-        // Use a promise to handle the asynchronous file read
         fileBase64 = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.readAsDataURL(image);
@@ -565,6 +571,8 @@ const CreateEvent: React.FC = () => {
         }}
       />
     </Box>
+
+
   );
 };
 

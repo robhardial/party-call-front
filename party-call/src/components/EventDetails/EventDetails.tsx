@@ -12,6 +12,7 @@ import GetTickets from "../GetTickets/GetTickets";
 import MoreEvents from "../MoreEvents/MoreEvents";
 import { getEventsByUserId, getEventByTitle } from "../../services/Events.api";
 import Decimal from "decimal.js";
+import Loader from "../Loader/Loader";
 
 interface Venue {
   id: number;
@@ -44,8 +45,8 @@ interface Event {
 
 const EventDetails: React.FC = () => {
   const { eventName = " " } = useParams();
-  const [event, setEvent] = useState<Event>();
-
+  const [event, setEvent] = useState<Event | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const currentDate = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
   const startTimeString =
     event && event.startTime ? `${currentDate}T${event.startTime}` : 0; 
@@ -56,6 +57,8 @@ const EventDetails: React.FC = () => {
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
+      try{
       const data = await getEventsByUserId(1);
       if (data) {
         const cleanedEvents: Event[] = data.map((event: any) => ({
@@ -73,6 +76,11 @@ const EventDetails: React.FC = () => {
         }));
         setEvents(cleanedEvents);
       }
+    }catch(error){
+      console.error("Error fetching event:", error);
+    } finally {
+      setIsLoading(false); // Stop the loader
+    }
     })();
   }, []);
 
@@ -104,6 +112,10 @@ const EventDetails: React.FC = () => {
     const eventDetailsUrl = `/events/${event.title}`;
     window.open(eventDetailsUrl, "_blank");
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (!event) {
     return (
