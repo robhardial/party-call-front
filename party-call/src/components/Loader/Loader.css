@@ -1,0 +1,30 @@
+.loader-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh; 
+    background: rgba(255, 255, 255, 0.9); 
+  }
+  
+  .loader-box .MuiCircularProgress-root {
+    color: #008b8b; 
+  }
+  
+  .loader-text {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+    animation: fadeIn 1.5s infinite;
+  }
+  
+  @keyframes fadeIn {
+    0%, 100% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
