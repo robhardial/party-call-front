@@ -1,0 +1,77 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+.top-section {
+    height: 50%;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.bottom-section {
+    height: 50%;
+    background-color: #e1edf0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.center-box {
+    position: relative; 
+    background-color: white;
+    padding: 4rem; 
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); /* Subtle shadow for aesthetics */
+    border-radius: 15px;
+    text-align: center;
+    max-width: 500px; 
+    width: 90%; /* Responsive width for smaller screens */
+}
+
+.center-box img {
+    width: 150px; 
+    height: auto;
+    margin-bottom: 1.5rem; 
+}
+
+.center-box h2 {
+    font-family: "Arial", sans-serif;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.center-box p {
+    font-family: "Arial", sans-serif;
+    font-size: 1rem;
+    color: #6c757d;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.home-button {
+    margin-top: 2rem;
+}
+
+.home-button button {
+    background-color: #015482;
+    color: white;
+    align-items: center;
+    border-color: #015482;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.home-button button:hover {
+    background-color: white;
+    color: #015482;
+    border-color: #015482;
+}

@@ -7,6 +7,7 @@ import { grey } from "@mui/material/colors";
 import Decimal from "decimal.js";
 import { createEvent } from "../../services/Events.api";
 import Loader from "../Loader/Loader";
+import { useNavigate } from "react-router";
 
 interface File {
   name: string;
@@ -93,6 +94,8 @@ interface EventDto{
 }
 
 const CreateEvent: React.FC = () => {
+
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -230,6 +233,8 @@ const CreateEvent: React.FC = () => {
         console.log(eventDto);
         const response = await createEvent(eventDto);
         console.log('Event created:', response);
+        navigate("/creation-success");
+        
       }
     } catch (error) {
       console.error('Error creating event:', error);
@@ -238,13 +243,13 @@ const CreateEvent: React.FC = () => {
   
 
   return (
+
     <Box
       display="flex"
       justifyContent="center"
       alignItems="flex-start"
       sx={{ height: "100vh", width: "100%" }}
     >
-
     <Box
           component="form"
           p={3}
@@ -557,6 +562,7 @@ const CreateEvent: React.FC = () => {
       <Button variant="outlined" size="large" color="primary">Create Event</Button>
       </div>
     </Box>
+
 
     <Box
         component="img"
