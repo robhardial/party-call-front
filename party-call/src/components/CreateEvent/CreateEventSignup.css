@@ -1,0 +1,144 @@
+.split-page {
+    height: 130vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-half{
+    flex: .3;
+    background-color: white;
+  }
+
+  .middle-half{
+    flex: .7;
+    background-color: #015482;
+  }
+
+  .bottom-half{
+    flex: .5;
+    background-color: #7FDBFF;
+  }
+
+  .party-image{
+    position: absolute;
+    top: 349px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 1288px; 
+    height: fixed; 
+    object-fit: cover; 
+  }
+
+  .main-text {
+    position: absolute;
+    z-index: 1000;
+    top: 70%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    text-align: center; 
+    font-size: 4rem !important; 
+    color: #19d3a9;
+}
+
+.sec-main-text{
+    position: absolute;
+    z-index: 1000;
+    top: 78%;
+    color: white;
+    font-family: sans-serif;
+    right: -1%;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-container-signup{
+  position: absolute;
+  top: 84%;  
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 10001
+    
+}
+
+.sign-up {
+    background-color: #19d3a9;
+    color: white;
+    padding: 15px 100px;
+    border-radius: 5px;
+    font: 1.5em sans-serif;
+    cursor: pointer;
+}
+
+.learn-more{
+    background-color: #015482;
+    color: white;
+    padding: 15px 100px;
+    border-radius: 5px;
+    border: 2px solid white;
+    font: 1.5em sans-serif;
+    cursor: pointer;
+}
+
+.box-signup{
+    position: absolute;
+    padding: 20px 100px;
+    background-color: #19d3a9;
+    width: 900px;
+    height: 120px;
+    left: 12%;
+    bottom: -27%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.first-text{
+    color: white;
+    position: relative;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    position: relative;
+    right: 11%;
+    font-size: 3.6rem;
+    font-weight: bolder;
+}
+
+.second-text{
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    text-align: left;
+    color: #015482;
+    position: relative;
+    font-size: 1.3rem;
+    font-weight: bolder;
+    bottom: 26%;
+    left: 2.5%;
+    font-family: sans-serif;
+}
+
+.big-sign-up {
+    position: absolute; /* Removes it from normal document flow */
+    background-color: #015482;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 14px 160px; 
+    font-family: sans-serif;
+    font-weight: bolder;
+    width: auto; /* Allow the content to dictate width */
+    left: 71%;
+    transform: translateX(-50%); 
+    top: 50%; 
+}
