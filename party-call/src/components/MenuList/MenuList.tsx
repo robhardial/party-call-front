@@ -66,13 +66,18 @@ export default function MenuListComposition() {
           color="inherit"
           size="medium"
           onClick={handleToggle}
+          className="dash-btn"
           sx={{
-            marginTop: "20px",
+            marginTop: "19px",
             fontSize: "15px",
+            paddingRight: "100px",
             position: "relative",
+            '&:hover': {
+              backgroundColor: 'transparent', // Removes hover background
+            },
           }}
         >
-          Dashboard
+          <span className="dash-btn">Dashboard</span>
         </IconButton>
         <Popper
           open={open}

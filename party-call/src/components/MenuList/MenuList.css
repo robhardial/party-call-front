@@ -2,3 +2,17 @@
     text-decoration: none;
     color: inherit;
 }
+
+.dash-btn{
+    transition: color 0.5s ease-in-out; /* Smooth transition for color */
+    padding: 10px 10px;
+    border-radius: 60px;
+    background: transparent;
+    border: 2px solid white;
+}
+
+.dash-btn:hover{
+    background-color: white; /* Hover color */
+    color: black;
+    border-color: black;
+}

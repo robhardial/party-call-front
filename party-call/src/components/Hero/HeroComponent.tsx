@@ -2,7 +2,7 @@ import React from "react";
 import newParty from "../../assets/newParty.png";
 import { createTheme, ThemeProvider, Button } from "@mui/material";
 import "./HeroComponent.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -13,18 +13,20 @@ const theme = createTheme({
 });
 
 const HeroComponent: React.FC = () => {
+  const nav = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <section className="custom-hero">
         <div className="background-image">
           <div className="hero-container">
             <div className="hero-text">
-              <h1 className="hero-first-text">Let's Make A Party Call</h1>
-              <Link to={"find-events"} className="link-reset">
-                <Button size="large" variant="contained" color="primary">
+              <div className="hero-first-text">
+                <span className="main-first-text">Making memories</span>
+                <span className="main-second-text">One at a time </span>
+              </div>
+                <div className="hero-button" onClick={() => nav("/find-events")}>
                   Find Events
-                </Button>
-              </Link>
+                </div>
             </div>
           </div>
         </div>

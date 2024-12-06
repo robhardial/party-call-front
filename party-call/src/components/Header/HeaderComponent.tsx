@@ -236,20 +236,24 @@ const isTokenExpired = (token: string): boolean => {
               size="medium"
               aria-label="Find Events"
               color="inherit"
-              sx={{ mr: 10, fontSize: 15, display: "none" }}
+              sx={{ mr: 5, fontSize: 15 , '&:hover': {
+              backgroundColor: 'transparent', // Removes hover background
+            },}}
             >
               <Link to="find-events" className="link-reset">
-                <p>Find Events</p>
+                <p className="find-events">Find Events</p>
               </Link>
             </IconButton>
             <IconButton
               size="medium"
               aria-label="Create Events"
               color="inherit"
-              sx={{ mr: 10, fontSize: 15 }}
+              sx={{ mr: 5, fontSize: 15, '&:hover': {
+              backgroundColor: 'transparent', // Removes hover background
+            }, }}
             >
               <Link to="create-event" className="link-reset">
-                <p>Create Events</p>
+                <p className="find-events">Create Events</p>
               </Link>
             </IconButton>
             <IconButton
@@ -257,9 +261,11 @@ const isTokenExpired = (token: string): boolean => {
               edge="end"
               aria-label="Help Center"
               color="inherit"
-              sx={{ mr: 10, fontSize: 15 }}
+              sx={{ mr: 5, fontSize: 15, '&:hover': {
+              backgroundColor: 'transparent', // Removes hover background
+            }, }}
             >
-              <p>Help Center</p>
+              <p className="find-events">Help Center</p>
             </IconButton>
             {!isLoggedIn && (
               <IconButton
@@ -267,10 +273,12 @@ const isTokenExpired = (token: string): boolean => {
                 edge="end"
                 aria-label="Login/Sign Up"
                 color="inherit"
-                sx={{ mr: 10, fontSize: 15 }}
+                sx={{ mr: 10, fontSize: 15, '&:hover': {
+              backgroundColor: 'transparent', // Removes hover background
+            }, }}
               >
                 <Link to="login" className="link-reset">
-                  <p>Login/Sign Up</p>
+                  <p className="find-events">Login/Sign Up</p>
                 </Link>
               </IconButton>
             )}

@@ -1,3 +1,8 @@
+
+.custom-hero{
+  height: 92vh;
+}
+
 .hero-container {
     position: relative;
     display: inline-block;
@@ -9,17 +14,15 @@
   }
 
   .background-image{
-    background-image: url('../../assets/newParty.jpg');
+    background-image: url('../../assets/bestparty.jpeg');
     background-size: cover;
     background-position: center;
-    height: 80vh;
+    height: 92vh;
     width: 100%;
     display: 'flex';
     justify-content: center;
     align-items: center;
 }
-
-
 
   .hero-image {
     width: 100%;
@@ -31,15 +34,13 @@
   
   .hero-text {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white; /* Change to your preferred text color */
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Optional: add background to text for better visibility */
-    padding: 40px;
-    border-radius: 5px;
-    font-size: 25px;
+    width: 100%;
+    font-size: 135px;
   }
 
   .link-reset{
@@ -48,6 +49,73 @@
   }
 
   .hero-first-text{
+    display: flex;
+    flex-direction: column;
     font-family: sans-serif;
     padding-bottom: 4%;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .main-first-text,
+  .main-second-text {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideIn 4s forwards infinite;
+  }
+
+  .main-first-text{
+    position: absolute;
+    top: -160%;
+  }
+
+  .main-second-text{
+    position: absolute;
+    top: 250%;
+    left: 43%;
+    animation-delay: 2s;
+  }
+
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+  }
+
+  .hero-button{
+    font-size: 15px;
+    position: absolute;
+    text-align: center;
+    top: 330%;
+    font-family: sans-serif;
+    left: 10%;
+    padding: 20px 40px;
+    background-color: white;
+    color: #000;
+    border-radius: 60px;
+    cursor: pointer;
+    border: 2px solid white;
+  }
+
+  .hero-button::after {
+    content: '→'; /* HTML entity for a right arrow */
+    margin-left: 4px; 
+    font-size: 1.3em; 
+    vertical-align: -.2em;
+  }
+
+  .hero-button:hover{
+    background-color: black; /* Hover color */
+    color: white;
+    border-color: white;
   }
