@@ -12,11 +12,11 @@ function App() {
   return (
     <div className="app">
       <Routes>
+        <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path={"find-events"} element={<FindEventsPage />} />
           <Route path="events/:eventName" element={<EventDetailsPage />} />
-          <Route path="login" element={<LoginPage />} />
           <Route path="create-event" element={<CreateEventPage />} />
           <Route path="creation-success" element={<CreationSuccessPage/>}/>
         </Route>

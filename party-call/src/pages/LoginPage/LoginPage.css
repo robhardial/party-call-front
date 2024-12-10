@@ -1,8 +1,8 @@
 .background-img{
-    background-image: url("../../assets/cheers.jpg");
+    background-image: url("../../assets/college.jpg");
     background-size: cover;
     background-position: center;
-    height: 96vh;
+    height: 110vh;
     width: 100%;
     display: 'flex';
     justify-content: center;

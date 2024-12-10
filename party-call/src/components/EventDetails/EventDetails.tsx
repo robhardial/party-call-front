@@ -58,35 +58,6 @@ const EventDetails: React.FC = () => {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      try{
-      const data = await getEventsByUserId(event?.creator.userId);
-      if (data) {
-        const cleanedEvents: Event[] = data.map((event: any) => ({
-          id: event.eventId,
-          price: event.price,
-          title: event.title,
-          startDate: event.startDate,
-          startTime: event.startTime,
-          endDate: event.endDate,
-          endTime: event.endTime,
-          image: event.imageUrl, 
-          venue: event.venue,
-          creator: event.creator,
-          description: event.description,
-        }));
-        setEvents(cleanedEvents);
-      }
-    }catch(error){
-      console.error("Error fetching event:", error);
-    } finally {
-      setIsLoading(false); // Stop the loader
-    }
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      console.log(eventName);
       const data = await getEventByTitle(eventName);
       if (data) {
         const cleanedEvent: Event = {
@@ -103,10 +74,41 @@ const EventDetails: React.FC = () => {
           description: data.description,
         };
         setEvent(cleanedEvent);
-        console.log(cleanedEvent);
       }
     })();
   }, [eventName]);
+
+  useEffect(() => {
+    if (event?.creator?.userId) {
+      const fetchEventsByUser = async () => {
+        try {
+          const data = await getEventsByUserId(event.creator.userId);
+          if (data) {
+            const cleanedEvents: Event[] = data.map((event: any) => ({
+              id: event.eventId,
+              price: event.price,
+              title: event.title,
+              startDate: event.startDate,
+              startTime: event.startTime,
+              endDate: event.endDate,
+              endTime: event.endTime,
+              image: event.imageUrl,
+              venue: event.venue,
+              creator: event.creator,
+              description: event.description,
+            }));
+            setEvents(cleanedEvents);
+          }
+        } catch (error) {
+          console.error("Error fetching events by user:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchEventsByUser();
+    }
+  }, [event]); // Fetch events when event is set
 
   const handleOpenEvent = (event: Event) => {
     const eventDetailsUrl = `/events/${event.title}`;
@@ -239,7 +241,7 @@ const EventDetails: React.FC = () => {
         <h2>More events from this organizer</h2>
         <br></br>
         <div className="events-list">
-          {events.map((event) => (
+          {events.slice(0,5).map((event) => (
             <div
               key={event.id}
               onClick={() => handleOpenEvent(event)}
