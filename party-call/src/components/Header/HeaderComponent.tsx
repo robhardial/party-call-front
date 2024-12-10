@@ -204,7 +204,7 @@ const isTokenExpired = (token: string): boolean => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        sx={{ backgroundColor: "#008B8B", height: "80px" }}
+        sx={{ backgroundColor: "#D3D3D3", height: "80px" }}
       >
         <Toolbar sx={{ height: "100%" }}>
           <Typography
