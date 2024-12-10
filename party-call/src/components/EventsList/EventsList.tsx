@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import "./EventsList.css";
 import Decimal from "decimal.js";
 import Loader from "../Loader/Loader";
+import { Pagination } from "@mui/material";
 
 interface Venue {
   id: number;
@@ -36,6 +37,20 @@ interface Event {
 const EventsList: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 12;
+  
+  const totalPages = Math.ceil(events.length / eventsPerPage);
+  
+  const currEvents = events.slice(
+    (currentPage - 1) * eventsPerPage,
+    currentPage * eventsPerPage
+  );
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+  };
+
 
   useEffect(() => {
     (async () => {
@@ -77,13 +92,21 @@ const EventsList: React.FC = () => {
         <Loader /> // Display the loader while loading
       ) : (
         <div className="event-list">
-          {events.map((event) => (
+          {currEvents.map((event) => (
             <div key={event.id} onClick={() => handleOpenEvent(event)}>
               <MediaCard event={event} />
             </div>
         ))}
         </div>
       )}
+
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={handlePageChange}
+        size="large"
+        className="pagination"
+      />    
     </div>
   );
 };

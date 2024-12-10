@@ -4,4 +4,12 @@
     padding: 40px; /* Add padding around the container */
     gap: 3rem;
     align-content: center;
+
+}
+
+.pagination{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
 }
