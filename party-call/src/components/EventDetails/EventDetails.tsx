@@ -59,7 +59,7 @@ const EventDetails: React.FC = () => {
     (async () => {
       setIsLoading(true);
       try{
-      const data = await getEventsByUserId(1);
+      const data = await getEventsByUserId(event?.creator.userId);
       if (data) {
         const cleanedEvents: Event[] = data.map((event: any) => ({
           id: event.eventId,
