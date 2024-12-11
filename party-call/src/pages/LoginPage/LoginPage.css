@@ -1,5 +1,5 @@
 .background-img{
-    background-image: url("../../assets/college.jpg");
+    background-image: url("../../assets/pexels2.jpg");
     background-size: cover;
     background-position: center;
     height: 110vh;
@@ -11,4 +11,8 @@
 
 .new-logon-box{
     padding-top: 90px;
+}
+
+.error{
+    color: red;
 }

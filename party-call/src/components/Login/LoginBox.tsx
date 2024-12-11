@@ -16,8 +16,29 @@ const LoginBox: React.FC = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+
+
   const handleSubmit = async () => {
-    setMessage("");
+    const newErrors = {
+      name: action === "Sign Up" && !name ? "Name is required." : "",
+      email: !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+        ? "Invalid email address."
+        : "",
+      password: password.length < 6 ? "At least 6 characters." : "",
+    };
+  
+    setErrors(newErrors);
+  
+
+    if (Object.values(newErrors).some((error) => error)) {
+      return; 
+    }
 
     try {
       let response;
@@ -91,30 +112,30 @@ const LoginBox: React.FC = () => {
           <div></div>
         ) : (
           <div className="input">
-            <img src={user_icon} alt="" />
             <input
               type="text"
               placeholder="Name"
               onChange={(e) => setName(e.target.value)}
             ></input>
+            {errors.name && <span className="error">{errors.name}</span>}
           </div>
         )}
 
         <div className="input">
-          <img src={email_icon} alt="" />
           <input
             type="email"
             placeholder="E-mail"
             onChange={(e) => setEmail(e.target.value)}
           ></input>
+          {errors.email && <span className="error">{errors.email}</span>}
         </div>
         <div className="input">
-          <img src={lock} alt="" />
           <input
             type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           ></input>
+          {errors.password && <span className="error">{errors.password}</span>}
         </div>
       </div>
       {action === "Sign Up" ? (

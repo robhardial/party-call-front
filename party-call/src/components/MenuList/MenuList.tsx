@@ -86,6 +86,14 @@ export default function MenuListComposition() {
           placement="bottom-start"
           transition
           disablePortal
+          modifiers={[
+            {
+              name: "offset",
+              options: {
+                offset: [15, 3], // Adjusts the dropdown's offset. [x-axis, y-axis]
+              },
+            },
+          ]}
         >
           {({ TransitionProps, placement }) => (
             <Grow
@@ -103,13 +111,8 @@ export default function MenuListComposition() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <Link to={"account-settings"} className="link-reset">
-                      <MenuItem onClick={handleClose} sx={{ fontSize: "12px" }}>
-                        Account Settings
-                      </MenuItem>
-                    </Link>
                     <MenuItem onClick={handleClose} sx={{ fontSize: "12px" }}>
-                      My Tickets
+                      My Events
                     </MenuItem>
                     <MenuItem
                       onClick={() => {

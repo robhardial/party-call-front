@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     background: #f8f9fa; 
-    padding: 40px 20px;
+    padding: 20px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
     width: 100%;
@@ -13,6 +13,7 @@
     max-height: 430px;
     margin-left: 34%;
     margin-top: 2%;
+    font-family: sans-serif;
   }
   
  
@@ -49,13 +50,16 @@
     padding: 10px 15px;
     background: #ffffff;
     border-radius: 6px;
-    border: 1px solid #dcdcdc;
-    gap: 10px; /* Space between icon and input */
+    border: 2px solid lightgrey;
+    transition: border-color 0.3s ease;
   }
-  
-  .input img {
-    width: 20px;
-    height: 20px;
+
+  .input:focus-within{
+    border-color: #008b8b;
+  }
+
+  .input:hover{
+    border-color: #008b8b;
   }
   
   .input input {
