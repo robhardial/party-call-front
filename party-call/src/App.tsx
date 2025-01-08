@@ -6,6 +6,7 @@ import EventDetailsPage from "./pages/EventDetailsPage/EventDetailsPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import CreateEventPage from "./pages/CreateEventpage/CreateEventPage";
 import CreationSuccessPage from "./pages/CreationSuccessPage/CreationSuccessPage";
+import MyEventsPage from "./pages/MyEventsPage/MyEventsPage";
 import "./App.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="events/:eventName" element={<EventDetailsPage />} />
           <Route path="create-event" element={<CreateEventPage />} />
           <Route path="creation-success" element={<CreationSuccessPage/>}/>
+          <Route path="my-events" element={<MyEventsPage />}/>
         </Route>
       </Routes>
     </div>
