@@ -8,9 +8,7 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
-import PersonIcon from "@mui/icons-material/Person";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
@@ -261,7 +259,7 @@ const isTokenExpired = (token: string): boolean => {
               edge="end"
               aria-label="Help Center"
               color="inherit"
-              sx={{ mr: 5, fontSize: 15, '&:hover': {
+              sx={{ mr: 5, display: "none", fontSize: 15, '&:hover': {
               backgroundColor: 'transparent', // Removes hover background
             }, }}
             >
@@ -283,7 +281,7 @@ const isTokenExpired = (token: string): boolean => {
               </IconButton>
             )}
 
-            {isLoggedIn &&  <MenuList></MenuList>}
+            {isLoggedIn &&  <div className="menu-list"><MenuList></MenuList></div>}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

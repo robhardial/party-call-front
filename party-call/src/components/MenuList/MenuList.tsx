@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
@@ -112,7 +111,9 @@ export default function MenuListComposition() {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem onClick={handleClose} sx={{ fontSize: "12px" }}>
-                      My Events
+                      <Link to="/my-events" className="link-reset">
+                        My Events
+                      </Link>
                     </MenuItem>
                     <MenuItem
                       onClick={() => {

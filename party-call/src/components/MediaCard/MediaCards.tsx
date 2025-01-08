@@ -2,7 +2,6 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box, CardActions, Container } from "@mui/material";
 import "./MediaCard.css";
@@ -41,7 +40,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ event }) => {
     event && event.startTime ? `${currentDate}T${event.startTime}` : 0;
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className="media-card">
       <CardActionArea>
         <CardMedia
           component="img"

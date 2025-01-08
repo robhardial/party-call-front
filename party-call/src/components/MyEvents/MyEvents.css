@@ -1,0 +1,27 @@
+.my-events {
+    font-family: sans-serif;
+    margin: 0;
+    padding-top: 5%;
+    height: auto;
+    min-height: 5vh; 
+}
+
+.events-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: auto; 
+    min-height: 130vh; 
+}
+
+.events-created {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.events-attending{
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-bottom: 10%;
+    margin-top: 10%;
+}

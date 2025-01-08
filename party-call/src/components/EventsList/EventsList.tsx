@@ -1,14 +1,13 @@
 import React from "react";
 import MediaCard from "../MediaCard/MediaCards";
+import Grid from "@mui/material/Grid";
 import "./EventsList.css";
-import party from "../../assets/party.jpeg";
 import { useState, useEffect } from "react";
 import { getEvents } from "../../services/Events.api";
-import { Link } from "react-router-dom";
 import "./EventsList.css";
 import Decimal from "decimal.js";
 import Loader from "../Loader/Loader";
-import { Pagination } from "@mui/material";
+import { Box, Pagination } from "@mui/material";
 
 interface Venue {
   id: number;
@@ -91,13 +90,17 @@ const EventsList: React.FC = () => {
       {isLoading ? (
         <Loader /> // Display the loader while loading
       ) : (
-        <div className="event-list">
+        <Box style={{ maxWidth: "100%" }}>
+          <Grid container spacing={3} style={{ margin: "0 auto", width: "calc(100% - 62px)" }}>
           {currEvents.map((event) => (
+            <Grid item xs={12} md={3}>
             <div key={event.id} onClick={() => handleOpenEvent(event)}>
               <MediaCard event={event} />
             </div>
+            </Grid>
         ))}
-        </div>
+        </Grid>
+        </Box>
       )}
 
       <Pagination

@@ -24,6 +24,12 @@ interface Event {
   };
 }
 
+interface Ticket{
+  price: Decimal,
+  eventId: number,
+  userId: string
+}
+
 interface EventDto{
   event : Event;
   fileDTO: {
@@ -97,4 +103,67 @@ const createEvent = async (eventDto: EventDto) : Promise<Event> => {
     }
 }
 
-export { getEvents, getEventsByUserId, getEventByTitle, createEvent };
+const getEventsByEmail = async(email : string) : Promise<Event[]> => {
+
+  try{
+    const response = await axios.get(`http://wwww.localhost:8080/events/email/${email}`);
+    console.log("Data:", response.data);
+    return response.data; 
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+}
+
+const createTicket = async (ticket : Ticket) : Promise<Ticket> => {
+  try{
+
+    const token = localStorage.getItem('jwtToken'); 
+
+    if (!token) {
+      throw new Error('No access token found');
+    }
+
+    const response = await axios.post(`http://www.localhost:8080/tickets/ticket`,
+      ticket,
+      {
+        headers :{
+          'Authorization': `Bearer ${token}`,  // Include the Bearer token in the header
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+    return response.data;
+  }catch(error){
+    console.error("Error: ", error);
+    throw error;
+  }
+
+}
+
+const getTicketsByUser = async (email : string): Promise<Ticket[]> => {
+  try {
+
+    const token = localStorage.getItem('jwtToken'); 
+
+    if (!token) {
+      throw new Error('No access token found');
+    }
+    
+    const response = await axios.get(`http://localhost:8080/tickets/${email}`,
+      {
+        headers :{
+          'Authorization': `Bearer ${token}`,  // Include the Bearer token in the header
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+    console.log("Data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+    return [];
+  }
+};
+
+export { getEvents, getEventsByUserId, getEventByTitle, createEvent, getEventsByEmail, createTicket, getTicketsByUser };
