@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Link,
-  unstable_DataStrategyFunctionArgs,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import { Box, Paper, Typography } from "@mui/material";
 import "./EventDetails.css";
 import { AccountCircle, CalendarMonth, LocationOn } from "@mui/icons-material";
@@ -14,11 +9,6 @@ import { getEventsByUserId, getEventByTitle } from "../../services/Events.api";
 import Decimal from "decimal.js";
 import Loader from "../Loader/Loader";
 
-interface Venue {
-  id: number;
-  name: string;
-  location: string;
-}
 
 interface Event {
   id: number;
