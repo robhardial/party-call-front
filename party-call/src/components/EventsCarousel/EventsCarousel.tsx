@@ -56,7 +56,7 @@ const CustomArrow = ({ className, onClick, direction }: { className?: string; on
 const EventsCarousel: React.FC<EventCarouselProps> = ({ eventList }) => {
   const settings = {
     dots: true,
-    infinite: true, // Enable infinite scrolling
+    infinite: false, // Enable infinite scrolling
     speed: 500,
     slidesToShow: 4, // Number of slides visible at once
     slidesToScroll: 1, // Number of slides to scroll at a time
@@ -81,12 +81,11 @@ const EventsCarousel: React.FC<EventCarouselProps> = ({ eventList }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: "1300px", width: "100%", height: "auto", margin: "10px auto", padding: 2 }}>
+    <Box sx={{ maxWidth: "1300px", width: "100%", height: "auto", margin: "10px 0", padding: 2 }}>
       <Slider {...settings}>
         {eventList.map((event) => (
           <Box
             key={event.id} // Add a unique key here
-            className="card-box"
             m={1}
             sx={{
               padding: "0 20px", // Add spacing between cards
