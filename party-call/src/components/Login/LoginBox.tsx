@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Person, Email, Password, ArrowForwardIos } from "@mui/icons-material";
-import user_icon from "../../assets/user.png";
-import lock from "../../assets/lock.png";
-import email_icon from "../../assets/envelope.png";
 import Alert from "@mui/material/Alert";
 import "./LoginBox.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { userLogin, userRegistration } from "../../services/Auth.api";
 
 const LoginBox: React.FC = () => {
   const [action, setAction] = useState("Sign Up");
@@ -14,7 +13,6 @@ const LoginBox: React.FC = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({
     name: "",
@@ -22,7 +20,7 @@ const LoginBox: React.FC = () => {
     password: "",
   });
 
-
+  const dispatch: AppDispatch = useDispatch();
 
   const handleSubmit = async () => {
     const newErrors = {
@@ -45,49 +43,27 @@ const LoginBox: React.FC = () => {
 
       if (action === "Sign Up") {
         const [firstName, lastName] = name.split(" ");
-        response = await axios.post(
-          "http://localhost:8080/auth/register",
-          {
-            firstName,
-            lastName,
-            email,
-            password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
-        );
+        response = await userRegistration(firstName,lastName,email,password)
 
-        if (response.status === 200) {
+        if (response) {
           setMessage("Registration successful!");
+          localStorage.setItem("jwtToken", response.token);
+          window.location.href = "/";
         } else {
           setMessage("Registration failed. Please try again.");
         }
       } else {
-        response = await axios.post(
-          "http://localhost:8080/auth/authenticate",
-          {
-            email,
-            password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
-        );
+        response = await userLogin(email, password);
 
-        if (response.status === 200) {
+        if (response) {
           setMessage("Login successful!");
-          localStorage.setItem("jwtToken", response.data.token);
+          localStorage.setItem("jwtToken", response.token);
           window.location.href = "/";
         } else {
           setMessage("Login failed. Please try again.");
         }
 
-        console.log(response.data);
+        console.log(response);
       }
     } catch (error) {
       if (error instanceof Error) {

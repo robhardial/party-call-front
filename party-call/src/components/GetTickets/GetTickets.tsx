@@ -24,7 +24,7 @@ interface Event {
   creator: {
     firstName: string;
     lastName: string;
-    id : number;
+    userId : number;
   };
 }
 

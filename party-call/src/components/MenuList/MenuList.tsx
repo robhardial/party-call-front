@@ -9,10 +9,15 @@ import Stack from "@mui/material/Stack";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./MenuList.css";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store"
+import { clearData } from "../../slices/eventSlice";
 
 export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
+
+  const dispatch : AppDispatch = useDispatch();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -40,6 +45,7 @@ export default function MenuListComposition() {
 
   const logout = async () => {
     localStorage.removeItem("jwtToken");
+    dispatch(clearData());
     window.location.href = "/";
   };
 
