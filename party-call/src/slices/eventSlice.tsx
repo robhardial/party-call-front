@@ -26,8 +26,8 @@ interface Event {
 
 interface Ticket{
     price: Decimal,
-    eventId: number,
-    userId: string
+    event: Event,
+    ticketId: string
 }
 
 interface EventState{

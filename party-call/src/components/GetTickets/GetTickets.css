@@ -25,3 +25,21 @@
     font-size: 16px;
     font-weight: bolder;
 }
+
+.delete-btn{
+    width: 100px;
+    height: 30px;
+    font-size: 16px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+}
+
+.edit-btn{
+    width: 100px;
+    height: 30px;
+    font-size: 16px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+}

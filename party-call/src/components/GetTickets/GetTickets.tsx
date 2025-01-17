@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper, Box, Button } from "@mui/material";
 import "./GetTickets.css";
 import Decimal from "decimal.js";
-import { createTicket } from "../../services/Events.api";
+import { createTicket, deleteTicket, getTicketsByUser } from "../../services/Events.api";
 import { extractEmail } from "../../services/JWT";
+import { AppDispatch, RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { setTickets } from "../../slices/eventSlice";
 
 interface Event {
   id: number;
@@ -28,12 +31,6 @@ interface Event {
   };
 }
 
-interface Ticket{
-  price: Decimal,
-  eventId: number,
-  userId: string
-}
-
 interface GetTicketsProps {
   event: Event;
 }
@@ -43,8 +40,40 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
   const jwtToken = localStorage.getItem("jwtToken") || null;
   const email = jwtToken? extractEmail(jwtToken) : 'null';
 
-  const [attending, setAttending] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+  const tickets = useSelector((state: RootState) => state.event.tickets);
 
+  const [attending, setAttending] = useState(false);
+  const [creator,setCreator] = useState(false);
+  const [ticketId, setTicketId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTickets = async () => {
+      if (email) {
+        try {
+          const userTickets = await getTicketsByUser(email);
+          dispatch(setTickets(userTickets));
+        } catch (error) {
+          console.error("Error fetching tickets:", error);
+        }
+      }
+    };
+
+    fetchTickets
+    ();
+  }, [email, dispatch]);
+
+  useEffect(() => {
+    // Check if the user has a ticket for the current event
+    const ticket = tickets.find((ticket) => ticket.event.eventId === event.id);
+    if (ticket) {
+      setAttending(true);
+      setTicketId(ticket.ticketId); // Assuming `ticketId` is part of the ticket object
+    } else {
+      setAttending(false);
+      setTicketId(null);
+    }
+  }, [tickets, event.id]);
 
   const attendEvent = async () => {
       try{
@@ -53,8 +82,6 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
           eventId : event.id,
           userId : email? email : "samplemail@gmail.com"
         };
-
-        console.log(ticket);
 
         const response = await createTicket(ticket);
         console.log('Event created:', response);
@@ -66,6 +93,20 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
   };
 
   const unattendEvent = async () => {
+    try{
+
+      if(ticketId != null){
+      const response = await deleteTicket(ticketId);
+      console.log("Response: ",response);
+
+      if(response){
+        setAttending(false);
+        console.log(attending);
+      }
+    }
+    }catch(error){
+      console.error(error);
+    }
 
   }
 
@@ -82,12 +123,20 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
           },
         }}
       >
-        <Paper elevation={3}>
+        <Paper elevation={3} style={{height: "100%"}}>
           <Box p={2} className="ticket-box">
             <h2>${Number(event.price).toFixed(2)}</h2>
             {attending ? (<button className="attending-btn" onClick={unattendEvent}>Attending</button> ) :
             (<button className="ticket-btn" onClick={attendEvent}>Attend</button>)
-}
+            }
+            <Box display="flex" justifyContent="space-between" mt={2} gap={1}>
+              <button className="delete-btn" >
+                Delete
+              </button>
+              <button className="edit-btn" >
+                Edit
+              </button>
+            </Box>
           </Box>
         </Paper>
       </Box>

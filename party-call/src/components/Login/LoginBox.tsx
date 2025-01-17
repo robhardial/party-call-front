@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { userLogin, userRegistration } from "../../services/Auth.api";
+import { setEvents, setTickets } from "../../slices/eventSlice"; //implement this!!
+import { getEventsByEmail, getTicketsByUser } from "../../services/Events.api";
 
 const LoginBox: React.FC = () => {
   const [action, setAction] = useState("Sign Up");
@@ -43,7 +45,7 @@ const LoginBox: React.FC = () => {
 
       if (action === "Sign Up") {
         const [firstName, lastName] = name.split(" ");
-        response = await userRegistration(firstName,lastName,email,password)
+        response = await userRegistration(firstName,lastName,email,password);
 
         if (response) {
           setMessage("Registration successful!");
@@ -58,10 +60,18 @@ const LoginBox: React.FC = () => {
         if (response) {
           setMessage("Login successful!");
           localStorage.setItem("jwtToken", response.token);
-          window.location.href = "/";
         } else {
           setMessage("Login failed. Please try again.");
         }
+
+        const events = await getEventsByEmail(email);
+        const tickets = await getTicketsByUser(email);
+
+
+        dispatch(setEvents(events));
+        dispatch(setTickets(tickets));
+
+        window.location.href = "/";
 
         console.log(response);
       }
