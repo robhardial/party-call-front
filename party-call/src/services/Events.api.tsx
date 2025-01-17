@@ -26,6 +26,12 @@ interface Event {
 
 interface Ticket{
   price: Decimal,
+  event : Event
+  ticketId: string
+}
+
+interface TicketDto{
+  price: Decimal,
   eventId: number,
   userId: string
 }
@@ -115,7 +121,7 @@ const getEventsByEmail = async(email : string) : Promise<Event[]> => {
   }
 }
 
-const createTicket = async (ticket : Ticket) : Promise<Ticket> => {
+const createTicket = async (ticket : TicketDto) : Promise<Ticket> => {
   try{
 
     const token = localStorage.getItem('jwtToken'); 
@@ -166,4 +172,30 @@ const getTicketsByUser = async (email : string): Promise<Ticket[]> => {
   }
 };
 
-export { getEvents, getEventsByUserId, getEventByTitle, createEvent, getEventsByEmail, createTicket, getTicketsByUser };
+const deleteTicket = async (id : string) : Promise<Ticket> => {
+  try{
+
+    const token = localStorage.getItem('jwtToken'); 
+
+    if (!token) {
+      throw new Error('No access token found');
+    }
+
+    const ticketId = new Number(id).valueOf();
+    const response = await axios.delete(`http://localhost:8080/tickets/ticket/${ticketId}`,
+      {
+        headers :{
+          'Authorization': `Bearer ${token}`,  // Include the Bearer token in the header
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    return response.data;
+  }catch(error){
+    console.error("Error: ", error);
+    throw error;
+  }
+}
+
+export { getEvents, getEventsByUserId, getEventByTitle, createEvent, getEventsByEmail, createTicket, getTicketsByUser, deleteTicket };
