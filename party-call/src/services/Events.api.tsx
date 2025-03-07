@@ -198,4 +198,30 @@ const deleteTicket = async (id : string) : Promise<Ticket> => {
   }
 }
 
-export { getEvents, getEventsByUserId, getEventByTitle, createEvent, getEventsByEmail, createTicket, getTicketsByUser, deleteTicket };
+const deleteEventAndTickets = async (eventId : number) : Promise<string> => {
+
+  try{
+
+    const token = localStorage.getItem('jwtToken');
+
+    if (!token) {
+      throw new Error('No access token found');
+    }
+
+    const response = await axios.delete(`http://localhost:8080/events/event/${eventId}/tickets`,
+      {
+        headers :{
+          'Authorization': `Bearer ${token}`,  // Include the Bearer token in the header
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+
+    return response.data;
+  }catch(error){
+      console.error("Error: ", error);
+      throw error;
+  }
+}
+
+export { getEvents, getEventsByUserId, getEventByTitle, createEvent, getEventsByEmail, createTicket, getTicketsByUser, deleteTicket, deleteEventAndTickets };
