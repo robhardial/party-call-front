@@ -7,6 +7,7 @@ import { extractEmail } from "../../services/JWT";
 import { AppDispatch, RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { setTickets } from "../../slices/eventSlice";
+import { useNavigate } from "react-router";
 
 interface Event {
   id: number;
@@ -50,6 +51,7 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
   const[showModal, setShowModal] = useState(false);
   const price = Number(event.price).toFixed(2);
   const userEvent = email === eventEmail;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -122,6 +124,7 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
     try{
       const response = await deleteEventAndTickets(eventId);
       console.log("Response: ",response);
+      navigate("/");
     }catch(error){
       console.error(error);
     }
