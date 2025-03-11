@@ -82,6 +82,11 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
   }, [tickets, event.id]);
 
   const attendEvent = async () => {
+
+      if(jwtToken == null){
+        navigate("/login");
+      }
+
       try{
         const ticket = {
           price : event.price,
