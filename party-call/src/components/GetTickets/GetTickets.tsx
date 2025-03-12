@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Paper, Box, Button } from "@mui/material";
 import "./GetTickets.css";
 import Decimal from "decimal.js";
-import { createTicket, deleteTicket, getTicketsByUser } from "../../services/Events.api";
+import { createTicket, deleteTicket, getTicketsByUser, deleteEventAndTickets } from "../../services/Events.api";
 import { extractEmail } from "../../services/JWT";
 import { AppDispatch, RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { setTickets } from "../../slices/eventSlice";
+import { useNavigate } from "react-router";
 
 interface Event {
   id: number;
@@ -28,6 +29,7 @@ interface Event {
     firstName: string;
     lastName: string;
     userId : number;
+    email : string;
   };
 }
 
@@ -39,13 +41,17 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
 
   const jwtToken = localStorage.getItem("jwtToken") || null;
   const email = jwtToken? extractEmail(jwtToken) : 'null';
+  const eventEmail = event.creator.email;
 
   const dispatch: AppDispatch = useDispatch();
   const tickets = useSelector((state: RootState) => state.event.tickets);
 
   const [attending, setAttending] = useState(false);
-  const [creator,setCreator] = useState(false);
   const [ticketId, setTicketId] = useState<string | null>(null);
+  const[showModal, setShowModal] = useState(false);
+  const price = Number(event.price).toFixed(2);
+  const userEvent = email === eventEmail;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -76,6 +82,11 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
   }, [tickets, event.id]);
 
   const attendEvent = async () => {
+
+      if(jwtToken == null){
+        navigate("/login");
+      }
+
       try{
         const ticket = {
           price : event.price,
@@ -110,6 +121,20 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
 
   }
 
+  const showDeleteConfirmation = async () => {
+    setShowModal(true);
+  }
+
+  const confirmDeleteEvent = async(eventId : number) => {
+    try{
+      const response = await deleteEventAndTickets(eventId);
+      console.log("Response: ",response);
+      navigate("/");
+    }catch(error){
+      console.error(error);
+    }
+  }
+
   return (
     <div>
       <Box
@@ -125,18 +150,33 @@ const GetTickets: React.FC<GetTicketsProps> = ({ event }) => {
       >
         <Paper elevation={3} style={{height: "100%"}}>
           <Box p={2} className="ticket-box">
-            <h2>${Number(event.price).toFixed(2)}</h2>
+          <h2>{Number(event.price) === 0 ? "Free" : `$${price}`}</h2>
             {attending ? (<button className="attending-btn" onClick={unattendEvent}>Attending</button> ) :
             (<button className="ticket-btn" onClick={attendEvent}>Attend</button>)
             }
+            { userEvent ? (
             <Box display="flex" justifyContent="space-between" mt={2} gap={1}>
-              <button className="delete-btn" >
-                Delete
-              </button>
-              <button className="edit-btn" >
-                Edit
-              </button>
+            {!showModal && (
+                <Box display="flex" gap={2}>
+                  <button className="edit-btn">
+                    Edit
+                  </button>
+                  <button className="delete-btn" onClick={showDeleteConfirmation}>
+                    Delete
+                  </button>
+                </Box>
+              )}
+              {showModal && (
+                <div className="modal-overlay">
+                    <p>Are you sure you want to delete this event?</p>
+                    <Box display="flex" gap={2} alignItems={"center"} justifyContent="center">
+                    <button onClick={() => confirmDeleteEvent(event.id)} className="confirm-btn">Yes, Delete</button>
+                    <button onClick={() => setShowModal(false)} className="delete-btn">Cancel</button>
+                    </Box>
+                </div>
+              )}
             </Box>
+            ) : <div></div>}
           </Box>
         </Paper>
       </Box>
